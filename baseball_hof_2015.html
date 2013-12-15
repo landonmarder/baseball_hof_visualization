@@ -1,0 +1,59 @@
+<!doctype html>
+<html>
+
+<head>
+  <title>D3 Tutorial</title>
+  <script src="http://d3js.org/d3.v3.min.js"></script>
+</head>
+
+<body>
+<h1>WAR7 of 2015 Baseball HOF Candidates</h1>
+<h3>How do they compare against current HOFs?</h3>
+  <script>
+
+  d3.csv("baseball_hof_2015.csv", function(data) {
+    var width = 800;
+    var height = 1500;
+
+    var widthScale = d3.scale.linear()
+                    .domain([0,70])
+                    .range([0,width])
+
+    var colorScale = d3.scale.linear()
+                  .domain([32, 68]) // Hall of Fame Threshold for WAR
+                  .range(["red" ,"green"]);
+
+    var canvas = d3.select("body").append("svg")
+      .attr("width", width)
+      .attr("height", height)
+
+    var axis = d3.svg.axis()
+            .ticks(5)
+            .scale(widthScale);
+
+      canvas.selectAll("rect")
+        .data(data)
+        .enter()
+          .append("rect")
+          .attr("transform", "translate(15,0)")
+          .attr("width", function (d) { return widthScale(d.war7); })
+          .attr("height", 48)
+          .attr("fill", function (d) { return colorScale(d.war7); })
+          .attr("y", function (d, i) { return i * 50; });
+
+      canvas.selectAll("text")
+        .data(data)
+        .enter()
+          .append("text")
+          .attr("transform", "translate(25,0)")
+          .attr("fill", "white")
+          .attr("y", function (d, i) { return i * 50 + 24; })
+          .text(function (d) { return d.name ; });
+      canvas.append("g")
+        .attr("transform", "translate(15,1010)")
+        .call(axis);
+          })
+
+  </script>
+</body>
+</html>
