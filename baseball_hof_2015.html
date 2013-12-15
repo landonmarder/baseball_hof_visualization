@@ -2,13 +2,14 @@
 <html>
 
 <head>
-  <title>D3 Tutorial</title>
+  <title>Baseball Hall of Fame Visualizations</title>
   <script src="http://d3js.org/d3.v3.min.js"></script>
 </head>
 
 <body>
 <h1>WAR7 of 2015 Baseball HOF Candidates</h1>
 <h3>How do they compare against current HOFs?</h3>
+
   <script>
 
   d3.csv("baseball_hof_2015.csv", function(data) {
@@ -20,7 +21,7 @@
                     .range([0,width])
 
     var colorScale = d3.scale.linear()
-                  .domain([32, 68]) // Hall of Fame Threshold for WAR
+                  .domain([20, 55]) // Hall of Fame Thresholds for WAR7 (want to look more into it?)
                   .range(["red" ,"green"]);
 
     var canvas = d3.select("body").append("svg")
@@ -31,28 +32,29 @@
             .ticks(5)
             .scale(widthScale);
 
-      canvas.selectAll("rect")
-        .data(data)
-        .enter()
-          .append("rect")
-          .attr("transform", "translate(15,0)")
-          .attr("width", function (d) { return widthScale(d.war7); })
-          .attr("height", 48)
-          .attr("fill", function (d) { return colorScale(d.war7); })
-          .attr("y", function (d, i) { return i * 50; });
+    canvas.selectAll("rect")
+      .data(data)
+      .enter()
+        .append("rect")
+        .attr("transform", "translate(15,0)")
+        .attr("width", function (d) { return widthScale(d.war7); })
+        .attr("height", 48)
+        .attr("fill", function (d) { return colorScale(d.war7); })
+        .attr("y", function (d, i) { return i * 50; });
 
-      canvas.selectAll("text")
-        .data(data)
-        .enter()
-          .append("text")
-          .attr("transform", "translate(25,0)")
-          .attr("fill", "white")
-          .attr("y", function (d, i) { return i * 50 + 24; })
-          .text(function (d) { return d.name ; });
-      canvas.append("g")
-        .attr("transform", "translate(15,1010)")
-        .call(axis);
-          })
+    canvas.selectAll("text")
+      .data(data)
+      .enter()
+        .append("text")
+        .attr("transform", "translate(25,0)")
+        .attr("fill", "white")
+        .attr("y", function (d, i) { return i * 50 + 24; })
+        .text(function (d) { return d.name ; });
+
+    canvas.append("g")
+      .attr("transform", "translate(15,1010)")
+      .call(axis);
+        })
 
   </script>
 </body>
