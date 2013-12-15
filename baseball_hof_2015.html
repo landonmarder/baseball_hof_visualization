@@ -8,7 +8,7 @@
 
 <body>
 <h1>WAR7 of 2015 Baseball HOF Candidates</h1>
-<h3>How do they compare against current HOFs?</h3>
+<h3>How they compare against current HOFs:</h3>
 
   <script>
 
@@ -21,8 +21,8 @@
                     .range([0,width])
 
     var colorScale = d3.scale.linear()
-                  .domain([20, 55]) // Hall of Fame Thresholds for WAR7 (want to look more into it?)
-                  .range(["red" ,"green"]);
+                  .domain([32, 40,  70]) // Hall of Fame Thresholds for WAR7 (want to look more into it?)
+                  .range(["red", "orange","green"]);
 
     var canvas = d3.select("body").append("svg")
       .attr("width", width)
@@ -53,6 +53,7 @@
 
     canvas.append("g")
       .attr("transform", "translate(15,1010)")
+      .attr("fill", "grey")
       .call(axis);
         })
 
